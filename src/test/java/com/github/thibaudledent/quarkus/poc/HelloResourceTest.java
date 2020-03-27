@@ -12,10 +12,10 @@ public class HelloResourceTest {
     @Test
     public void testHelloEndpoint() {
         given()
-          .when().get("/foo")
+          .when().get("/quizz")
           .then()
              .statusCode(200)
-             .body(is("hello"));
+             .body(is("hello from quarkus-poc!"));
     }
 
 }

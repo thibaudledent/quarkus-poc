@@ -14,10 +14,11 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create \
   -DprojectGroupId=com.github.thibaudledent \
   -DprojectArtifactId=quarkus-poc \
   -DclassName="com.github.thibaudledent.quarkus.poc.HelloResource" \
-  -Dpath="/foo"
+  -Dpath="/quizz"
 ```
 
-3. klhkl
+3. `mvn compile quarkus:dev`
+4. Try it out `curl -X GET "localhost:8080/quizz"`
 
 ## Running the application in dev mode
 
