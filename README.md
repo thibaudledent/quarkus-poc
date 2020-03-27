@@ -60,6 +60,22 @@ docker run thibaudledent/quarkus-poc  0.03s user 0.02s system 3% cpu 1.669 total
 mvn package
 java -jar target/quarkus-poc-1.0-SNAPSHOT-runner.jar
 ```
+### Deploying the Standalone Jar on AWS Lambda
+
+1. Create a function with Java runtime
+
+<img src="screenshot_1.png" style="zoom:50%;" />
+
+2. Upload the jar
+
+Use `com.github.thibaudledent.quarkus.poc.HelloResource::hello `as handler
+
+<img src="screenshot_2.png" style="zoom:50%;" />
+
+3. Test it
+
+<img src="screenshot_3.png" style="zoom:50%;" />
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
