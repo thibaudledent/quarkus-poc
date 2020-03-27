@@ -4,7 +4,9 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
-## Steps
+## How to...
+
+### Create the Java project
 
 1. Check the last version of the `quarkus-maven-plugin` on https://search.maven.org/artifact/io.quarkus/quarkus-maven-plugin 
 2. Create the project using the plugin:
@@ -20,6 +22,44 @@ mvn io.quarkus:quarkus-maven-plugin:1.3.0.Final:create \
 3. `mvn compile quarkus:dev`
 4. Try it out `curl -X GET "localhost:8080/quizz"`
 
+### Run a Containerized Native Image
+
+In order to build a  native image, you don’t need to have GraalVM configured locally, Quarkus can use a dedicated containerized version of GraalVM for that:
+
+1. `mvn package -Pnative -Dquarkus.native.container-build=true`
+2. `docker build -f src/main/docker/Dockerfile.native -t thibaudledent/quarkus-poc .`
+
+A Docker image is created, you can check its size with `docker images -a | head`:
+
+``` docker images -a | head
+REPOSITORY                  TAG     IMAGE ID       CREATED           SIZE
+thibaudledent/quarkus-poc   latest  d0d0209d1325   13 seconds ago    155MB
+```
+
+3. `docker run thibaudledent/quarkus-poc`
+
+Starting time is fast `time docker run thibaudledent/quarkus-poc`:
+
+```bash
+__  ____  __  _____   ___  __ ____  ______
+ --/ __ \/ / / / _ | / _ \/ //_/ / / / __/
+ -/ /_/ / /_/ / __ |/ , _/ ,< / /_/ /\ \
+--\___\_\____/_/ |_/_/|_/_/|_|\____/___/
+2020-03-27 17:23:10,191 INFO  [io.quarkus] (main) quarkus-poc 1.0-SNAPSHOT (powered by Quarkus 1.3.0.Final) started in 0.027s. Listening on: http://0.0.0.0:8080
+2020-03-27 17:23:10,191 INFO  [io.quarkus] (main) Profile prod activated.
+2020-03-27 17:23:10,191 INFO  [io.quarkus] (main) Installed features: [cdi, resteasy]
+^C2020-03-27 17:23:11,081 INFO  [io.quarkus] (main) quarkus-poc stopped in 0.005s
+docker run thibaudledent/quarkus-poc  0.03s user 0.02s system 3% cpu 1.669 total
+```
+
+3. Try it out `docker exec -it $(docker ps | grep thibaudledent | awk '{print $1}') /bin/bash -c "curl -X GET 'localhost:8080/quizz'"`
+
+### Running a Standalone Jar
+
+```bash
+mvn package
+java -jar target/quarkus-poc-1.0-SNAPSHOT-runner.jar
+```
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
